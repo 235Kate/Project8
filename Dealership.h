@@ -11,7 +11,7 @@ public:
 	Dealership();
 	void displayInventory();
 	void addVehicle(Vehicle& vehicle);
-	Vehicle& searchVehicleByVin(int vin);
+	Vehicle* searchVehicleByVin(int vin);
 	void deleteVehicleByVin(int vin);
 	Vehicle& editVehicleColor(int vin, string color);
 	string city;

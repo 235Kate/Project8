@@ -104,12 +104,13 @@ void Dealership::addVehicle(Vehicle& vehicle) {
     inventory.push_back(vehicle);
 }
 
-Vehicle& Dealership::searchVehicleByVin(int vin) {
+Vehicle* Dealership::searchVehicleByVin(int vin) {
     for (size_t i = 0; i < inventory.size(); ++i) {
         if (inventory[i].vin == vin) {
-            return inventory[i];
+            return &inventory[i];
         }
     }
+    return nullptr;
 }
 
 void Dealership::deleteVehicleByVin(int vin) {

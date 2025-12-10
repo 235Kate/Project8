@@ -11,7 +11,7 @@ void UserInterface::start() {
 		uniqueCities.insert(vehicle.city);
 	}
 
-	vector<Dealership> dealerships = vector<Dealership>();
+	/*vector<Dealership> dealerships = vector<Dealership>();*/
 
 	for (const string& city : uniqueCities) {
 		vector<Vehicle> dealershipVehicles;
@@ -23,8 +23,6 @@ void UserInterface::start() {
 		dealerships.push_back(Dealership(dealershipVehicles, city));
 	}
 
-
-
 	/*Dealership dealership = Dealership();*/
 	MenuOption userChoice = MenuOption::ShowVehicles;
 	bool proceed = true;
@@ -35,57 +33,43 @@ void UserInterface::start() {
 		dealership.displayInventory();
 	}
 
-	//while (proceed) {
-	//	displayMenu();
+	while (proceed) {
+		displayMenu();
 
-	//	// Use std::cin for simple input reading
-	//	if (!(cin >> input)) {
-	//		// Handle bad input (e.g., user enters text instead of number)
-	//		cin.clear();
-	//		cin.ignore(10000, '\n');
-	//		input = static_cast<int>(MenuOption::Quit);
-	//	}
+		// Use std::cin for simple input reading
+		if (!(cin >> input)) {
+			// Handle bad input (e.g., user enters text instead of number)
+			cin.clear();
+			cin.ignore(10000, '\n');
+			input = static_cast<int>(MenuOption::Quit);
+		}
 
-	//	userChoice = getMenuOptionFromInt(input);
+		userChoice = getMenuOptionFromInt(input);
 
-	//	switch (userChoice) {
-	//	case MenuOption::ShowVehicles:
-	//		dealership.displayInventory();
-	//		break;
-	//	case MenuOption::AddVehicle:
-	//		addVehicle(dealership);
-	//		break;
-	//	case MenuOption::SearchVehicle: {
-	//		int vin;
-	//		cout << "Enter the vin number: ";
-	//		cin >> vin;
-	//		Vehicle foundVehicle = dealership.searchVehicleByVin(vin);
-	//		foundVehicle.display();
-	//		break;
-	//	}
-	//	case MenuOption::DeleteVehicle: {
-	//		int vin;
-	//		cout << "Enter the vin number: ";
-	//		cin >> vin;
-	//		dealership.deleteVehicleByVin(vin);
-	//		break;
-	//	}
-	//	case MenuOption::EditVehicle: {
-	//		int vin;
-	//		cout << "Enter the vin number: ";
-	//		cin >> vin;
-	//		string color;
-	//		cout << "Enter the new color: ";
-	//		cin >> color;
-	//		Vehicle editedVehicle = dealership.editVehicleColor(vin, color);
-	//		editedVehicle.display();
-	//		break;
-	//	}
-	//	case MenuOption::Quit:
-	//		proceed = false;
-	//		break;
-	//	}
-	//}
+		switch (userChoice) {
+		case MenuOption::ShowVehicles:
+			displayInventoryForDealership();
+			break;
+		case MenuOption::AddVehicle:
+			addVehicleForDealership();
+			break;
+		case MenuOption::SearchVehicle: {
+			searchVehicleInDealership();
+			break;
+		}
+		case MenuOption::DeleteVehicle: {
+			deleteVehicleFromDealership();
+			break;
+		}
+		case MenuOption::EditVehicle: {
+			editVehicleColorInDealership();
+			break;
+		}
+		case MenuOption::Quit:
+			proceed = false;
+			break;
+		}
+	}
 }
 
 void UserInterface::displayMenu() {
@@ -117,7 +101,6 @@ void UserInterface::addVehicle(Dealership& dealership) {
 	string model;
 	string color;
 	int price;
-	string city;
 	cout << "Enter the vin number: ";
 	cin >> vin;
 	cout << "Enter the year: ";
@@ -130,8 +113,7 @@ void UserInterface::addVehicle(Dealership& dealership) {
 	cin >> color;
 	cout << "Enter the price: ";
 	cin >> price;
-	cout << "Enter the city: ";
-	Vehicle vehicle = Vehicle(vin, year, make, model, color, city, price);
+	Vehicle vehicle = Vehicle(vin, year, make, model, color, dealership.city, price);
 	dealership.addVehicle(vehicle);
 }
 
@@ -161,4 +143,84 @@ Vehicle UserInterface::getVehicle() {
 	return vehicle;
 }
 
-//void UserInterface::
+void UserInterface::displayInventoryForDealership() {
+	string city;
+	cout << "Enter a city: ";
+	cin >> city;
+	for (Dealership dealership : dealerships) {
+		if (dealership.city == city) {
+			dealership.displayInventory();
+			break;
+		}
+	}
+}
+
+void UserInterface::addVehicleForDealership() {
+	string city;
+	cout << "Enter a city: ";
+	cin >> city;
+	for (Dealership& dealership : dealerships) {
+		if (dealership.city == city) {
+			addVehicle(dealership);
+			break;
+		}
+	}
+}
+
+void UserInterface::searchVehicleInDealership() {
+	int vin;
+	cout << "Enter the vin number: ";
+	cin >> vin;
+	bool found = false;
+	for (Dealership& dealership : dealerships) {
+		Vehicle* foundVehicle = dealership.searchVehicleByVin(vin);
+		if (foundVehicle != nullptr) {
+			foundVehicle->display();
+			found = true;
+		}
+	}
+	if (found == false) {
+		cout << "Vehicle not found.";
+	}
+}
+
+void UserInterface::deleteVehicleFromDealership() {
+	int vin;
+	cout << "Enter the vin number: ";
+	cin >> vin;
+	bool found = false;
+	for (Dealership& dealership : dealerships) {
+		Vehicle* foundVehicle = dealership.searchVehicleByVin(vin);
+		if (foundVehicle != nullptr) {
+			foundVehicle->display();
+			found = true;
+			dealership.deleteVehicleByVin(vin);
+			break;
+		}
+	}
+	if (found == false) {
+		cout << "Vehicle not found.";
+	}
+}
+
+void UserInterface::editVehicleColorInDealership() {
+	int vin;
+	cout << "Enter the vin number: ";
+	cin >> vin;
+	bool found = false;
+	for (Dealership& dealership : dealerships) {
+		Vehicle* foundVehicle = dealership.searchVehicleByVin(vin);
+		if (foundVehicle != nullptr) {
+			foundVehicle->display();
+			found = true;
+			string color;
+			cout << "Enter the color: ";
+			cin >> color;
+			dealership.editVehicleColor(vin, color);
+			break;
+		}
+	}
+	if (found == false) {
+		cout << "Vehicle not found.";
+	}
+}
