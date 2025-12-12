@@ -123,15 +123,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CreditPurchase.cpp" />
     <ClCompile Include="Dealership.cpp" />
+    <ClCompile Include="InstantPurchase.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuOption.cpp" />
+    <ClCompile Include="Purchase.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Vehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CreditPurchase.h" />
     <ClInclude Include="Dealership.h" />
+    <ClInclude Include="InstantPurchase.h" />
     <ClInclude Include="MenuOption.h" />
+    <ClInclude Include="Purchase.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="Vehicle.h" />
   </ItemGroup>

@@ -11,9 +11,15 @@ private:
 	Vehicle getVehicle();
 	void displayInventoryForDealership();
 	vector<Dealership> dealerships;
+
+	// We can store pointers to the derived classes in a vector of base class pointers.
+	// std::unique_ptr is used for automatic memory management.
+	vector<unique_ptr<Purchase>> sales_records;
+
 	void addVehicleForDealership(); 
 	void searchVehicleInDealership();
 	void deleteVehicleFromDealership();
 	void editVehicleColorInDealership();
+	void buyVehicle();
 };
 

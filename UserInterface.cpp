@@ -2,6 +2,8 @@
 #include <iostream>
 #include <set>
 #include <algorithm>
+#include "InstantPurchase.h"
+#include "CreditPurchase.h"
 using namespace std;
 
 void UserInterface::start() {
@@ -65,6 +67,9 @@ void UserInterface::start() {
 			editVehicleColorInDealership();
 			break;
 		}
+		case MenuOption::BuyVehicle: {
+			break;
+		}
 		case MenuOption::Quit:
 			proceed = false;
 			break;
@@ -79,7 +84,8 @@ void UserInterface::displayMenu() {
 	cout << "3 - search vehicle\n";
 	cout << "4 - delete vehicle\n";
 	cout << "5 - edit vehicle\n";
-	cout << "6 - quit\n";
+	cout << "6 - buy a vehicle\n";
+	cout << "7 - quit\n";
 	cout << "Please enter your choice: ";
 }
 
@@ -223,4 +229,30 @@ void UserInterface::editVehicleColorInDealership() {
 	if (found == false) {
 		cout << "Vehicle not found.";
 	}
+}
+
+void UserInterface::buyVehicle() {
+	int vin;
+	cout << "Enter the vin number: ";
+	cin >> vin;
+	int userChoice;
+	cout << "Enter 1 for an instant purchase.\n";
+	cout << "Enter 2 for a credit purchase.\n";
+	cin >> userChoice;
+	bool found = false;
+	for (Dealership& dealership : dealerships) {
+		Vehicle* foundVehicle = dealership.searchVehicleByVin(vin);
+		if (foundVehicle != nullptr) {
+			foundVehicle->display();
+			if (userChoice == 1) {
+				unique_ptr<Purchase> new_record = make_unique<InstantPurchase>(*foundVehicle, foundVehicle->price, 0.02);
+				sales_records.push_back(move(new_record));
+			}
+			found = true;
+		}
+	}
+	if (found == false) {
+		cout << "Vehicle not found.";
+	}
+
 }

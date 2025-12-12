@@ -4,6 +4,7 @@ enum class MenuOption {
 	SearchVehicle,
 	DeleteVehicle,
 	EditVehicle,
+	BuyVehicle,
 	Quit
 };
 
