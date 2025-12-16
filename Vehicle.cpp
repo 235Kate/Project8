@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Vehicle::Vehicle(int aVin, int aYear, string& aMake, string& aModel, string& aColor, string aCity, int aPrice)
+Vehicle::Vehicle(int aVin, int aYear, string& aMake, string& aModel, string& aColor, string aCity, double aPrice)
 	:vin(aVin), year(aYear), make(aMake), model(aModel), color(aColor), city(aCity), price(aPrice)  {}
 
 void Vehicle::display() {

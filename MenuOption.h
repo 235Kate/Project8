@@ -5,6 +5,7 @@ enum class MenuOption {
 	DeleteVehicle,
 	EditVehicle,
 	BuyVehicle,
+	DisplaySales,
 	Quit
 };
 

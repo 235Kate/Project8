@@ -68,6 +68,11 @@ void UserInterface::start() {
 			break;
 		}
 		case MenuOption::BuyVehicle: {
+			buyVehicle();
+			break;
+		}
+		case MenuOption::DisplaySales: {
+			displaySales();
 			break;
 		}
 		case MenuOption::Quit:
@@ -85,7 +90,8 @@ void UserInterface::displayMenu() {
 	cout << "4 - delete vehicle\n";
 	cout << "5 - edit vehicle\n";
 	cout << "6 - buy a vehicle\n";
-	cout << "7 - quit\n";
+	cout << "7 - display all sales\n";
+	cout << "8 - quit\n";
 	cout << "Please enter your choice: ";
 }
 
@@ -106,7 +112,7 @@ void UserInterface::addVehicle(Dealership& dealership) {
 	string make;
 	string model;
 	string color;
-	int price;
+	double price;
 	cout << "Enter the vin number: ";
 	cin >> vin;
 	cout << "Enter the year: ";
@@ -129,7 +135,7 @@ Vehicle UserInterface::getVehicle() {
 	string make;
 	string model;
 	string color;
-	int price;
+	double price;
 	string city;
 	cout << "Enter the vin number:";
 	cin >> vin;
@@ -245,14 +251,24 @@ void UserInterface::buyVehicle() {
 		if (foundVehicle != nullptr) {
 			foundVehicle->display();
 			if (userChoice == 1) {
-				unique_ptr<Purchase> new_record = make_unique<InstantPurchase>(*foundVehicle, foundVehicle->price, 0.02);
-				sales_records.push_back(move(new_record));
+				unique_ptr<Purchase> newRecord = make_unique<InstantPurchase>(*foundVehicle, foundVehicle->price, 0.02);
+				salesRecords.push_back(std::move(newRecord));
 			}
+			else {
+				unique_ptr<Purchase> newRecord = make_unique<CreditPurchase>(*foundVehicle, foundVehicle->price, 0.2, 60);
+				salesRecords.push_back(std::move(newRecord));
+			}
+			dealership.deleteVehicleByVin(vin);
 			found = true;
 		}
 	}
 	if (found == false) {
 		cout << "Vehicle not found.";
 	}
+}
 
+void UserInterface::displaySales() {
+	for (const auto& purchase : salesRecords) {
+		purchase->displayPurchase();
+	}
 }

@@ -66,7 +66,7 @@ vector<Vehicle> Dealership::parseVehicles(const string& csvData) {
             string model = cells[3];
             string color = cells[4];
             string city = cells[5];
-            int price = stoi(cells[6]);
+            double price = stoi(cells[6]);
 
             // Create and store the new Vehicle object
             vehicles.emplace_back(vin, year, make, model, color, city, price);

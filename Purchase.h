@@ -1,3 +1,5 @@
+#ifndef Purchase_h
+#define Purchase_h
 #include "Vehicle.h"
 class Purchase
 {
@@ -10,5 +12,7 @@ public:
 	// through a base class pointer.
 	virtual ~Purchase() = default;
 	virtual double calculateTotalCost() const = 0;
-};
 
+	virtual void displayPurchase();
+};
+#endif

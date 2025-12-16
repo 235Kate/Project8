@@ -1,6 +1,9 @@
+#ifndef Vehicle_h
+#define Vehicle_h
 #include <iostream>
+#include "Product.h"
 using namespace std;
-class Vehicle
+class Vehicle : public Product
 {
 public:
 	int vin;
@@ -8,11 +11,11 @@ public:
 	string make;
 	string model;
 	string color;
-	int price;
+	double price;
 	string city;
 
-	Vehicle(int aVin, int aYear, string& aMake, string& aModel, string& aColor, string city, int price);
+	Vehicle(int aVin, int aYear, string& aMake, string& aModel, string& aColor, string city, double price);
 
 	void display();
 };
-
+#endif

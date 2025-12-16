@@ -8,3 +8,11 @@ double CreditPurchase::calculateTotalCost() const {
     double totalInterest = basePrice * interestRate * (loanTermMonths / 12.0);
     return basePrice + totalInterest;
 }
+
+void CreditPurchase::displayPurchase() {
+    cout << "Credit purchase.\n";
+    Purchase::displayPurchase();
+    cout << "Price: " << basePrice << "\n";
+    cout << "Interest rate: " << interestRate << "\n";
+    cout << "Loan term months: " << loanTermMonths << "\n";
+}

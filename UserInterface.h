@@ -1,5 +1,8 @@
+#ifndef UserInterface_h
+#define UserInterface_h
 #include "MenuOption.h"
 #include "Dealership.h"
+#include "Purchase.h"
 
 class UserInterface {
 public:
@@ -14,12 +17,15 @@ private:
 
 	// We can store pointers to the derived classes in a vector of base class pointers.
 	// std::unique_ptr is used for automatic memory management.
-	vector<unique_ptr<Purchase>> sales_records;
+
+	vector<unique_ptr<Purchase>> salesRecords;
 
 	void addVehicleForDealership(); 
 	void searchVehicleInDealership();
 	void deleteVehicleFromDealership();
 	void editVehicleColorInDealership();
 	void buyVehicle();
+	void displaySales();
 };
+#endif
 
